@@ -6,7 +6,7 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/05/19 21:58:50 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/05/20 00:45:50 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int					return_all(char **backup, char **line, int read_size)
 		return (0);
 	}
 	*line = ft_strdup("");
+	free(*backup);
 	return (0);
 }
 
@@ -65,6 +66,8 @@ int get_next_line(int fd, char **line)
 
 	if (fd < 0 || line == NULL)
 		return (-1);
+	if (BUFFER_SIZE == 0)
+		return (-1);	
 	while((sizeofread = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[sizeofread] = '\0';
@@ -76,19 +79,20 @@ int get_next_line(int fd, char **line)
 	}
 	return (return_all(&back[fd], line, sizeofread));
 }
+/*
+int main (int argc, char **argv)
+{
+	int fd;
+	char *line;
+	(void) argc;
+	int a = 4;
 
-//int main (int argc, char **argv)
-//{
-//	int fd;
-//	char *line;
-//	(void) argc;
-//	int a = 4;
-//
-//	fd = open (argv[1], O_RDONLY);
-//	while (a != 0)
-//	{
-//		get_next_line (fd, &line);
-//		printf("%s\n", line);
-//		a--;
-//	}
-//}
+	fd = open (argv[1], O_RDONLY);
+	while (a != 0)
+	{
+		get_next_line (fd, &line);
+		printf("%s\n", line);
+		a--;
+	}
+}
+*/
