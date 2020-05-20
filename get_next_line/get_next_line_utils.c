@@ -6,7 +6,7 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:13 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/05/19 16:41:04 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/05/20 22:39:55 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (res);
 }
 
-char	*ft_strjoin(const char  *s1,const  char *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*fresh;
-	int		s1_len;	
+	int		s1_len;
 	int		s2_len;
 
 	if (!s1 || !s2)
@@ -85,6 +85,7 @@ char	*ft_strjoin(const char  *s1,const  char *s2)
 		return (0);
 	ft_strlcpy(fresh, s1, s1_len + 1);
 	ft_strlcat(fresh + (s1_len), s2, s2_len + 1);
+	free((char *)s1);
 	return (fresh);
 }
 
