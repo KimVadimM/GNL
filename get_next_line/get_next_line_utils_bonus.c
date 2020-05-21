@@ -6,11 +6,11 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:13 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/05/21 02:43:41 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/05/21 13:05:41 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
