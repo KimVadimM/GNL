@@ -6,7 +6,7 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/06/28 21:50:51 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/06/28 22:37:40 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int		return_all(char **backup, char **line, int read_size, char **buffer)
 		*backup = 0;
 		free(*backup);
 		free(*buffer);
-		return (1);
+		return (0);
 	}
 	free(*backup);
 	free(*buffer);
-	*line = NULL;
+	*line = ft_strdup("");
 	return (0);
 }
 
