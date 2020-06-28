@@ -6,11 +6,11 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/05/21 17:08:37 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/06/28 21:50:20 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		ft_checkline(char *back)
 {
@@ -44,41 +44,48 @@ int		return_all(char **backup, char **line, int read_size, char **buffer)
 	int checkline;
 
 	if (read_size < 0)
+	{
+		free(*backup);
+		free(*buffer);
 		return (-1);
+	}
 	if (*backup && (checkline = ft_checkline(*backup)) >= 0)
 		return (spit_line(backup, checkline, line, buffer));
 	else if (*backup)
 	{
 		*line = *backup;
 		*backup = 0;
-		return (0);
+		free(*backup);
+		free(*buffer);
+		return (1);
 	}
-	*line = ft_strdup("");
 	free(*backup);
+	free(*buffer);
+	*line = NULL;
 	return (0);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	static char		*back[10];
+	static char		*back[100];
 	ssize_t			sizeofread;
 	char			*buffer;
 	int				checkline;
+	char 			*tmp;
 
-	if (fd < 0 || line == NULL)
-		return (-1);
-	if (BUFFER_SIZE <= 0)
-		return (-1);
-	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0 ||
+	 (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
 		return (-1);
 	while ((sizeofread = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[sizeofread] = '\0';
 		if (back[fd] == NULL)
 			back[fd] = ft_strdup("");
-		back[fd] = ft_strjoin(back[fd], buffer);
+		tmp = ft_strjoin(back[fd], buffer);
+		free (back[fd]);
+		back[fd] = tmp;
 		if ((checkline = ft_checkline(back[fd])) >= 0)
-			return (spit_line(&back[fd], checkline, line, &buffer));
+			return(spit_line(&back[fd], checkline, line, &buffer));
 	}
 	return (return_all(&back[fd], line, sizeofread, &buffer));
 }
