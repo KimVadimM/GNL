@@ -6,11 +6,13 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/06/28 22:37:40 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:21:42 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+#include <stdio.h>
 
 int		ft_checkline(char *back)
 {
@@ -39,27 +41,25 @@ int		spit_line(char **back, int checkline, char **line, char **buffer)
 	return (1);
 }
 
-int		return_all(char **backup, char **line, int read_size, char **buffer)
+int		return_all(char **back, char **line, int read_size, char **buffer)
 {
 	int checkline;
 
 	if (read_size < 0)
 	{
-		free(*backup);
 		free(*buffer);
 		return (-1);
 	}
-	if (*backup && (checkline = ft_checkline(*backup)) >= 0)
-		return (spit_line(backup, checkline, line, buffer));
-	else if (*backup)
+	if (*back && (checkline = ft_checkline(*back)) >= 0)
+		return (spit_line(back, checkline, line, buffer));
+	else if (*back)
 	{
-		*line = *backup;
-		*backup = 0;
-		free(*backup);
+		*line = *back;
+		*back = 0;
 		free(*buffer);
 		return (0);
 	}
-	free(*backup);
+	free(*back);
 	free(*buffer);
 	*line = ft_strdup("");
 	return (0);
