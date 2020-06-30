@@ -6,7 +6,7 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/06/30 19:39:03 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:33:22 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,26 @@ int		spit_line(char **back, int checkline, char **line, char **buffer)
 	return (1);
 }
 
-int		return_all(char **backup, char **line, int read_size, char **buffer)
+int		return_all(char **back, char **line, int read_size, char **buffer)
 {
 	int checkline;
 
 	if (read_size < 0)
 	{
-		free(*backup);
 		free(*buffer);
 		return (-1);
 	}
-	if (*backup && (checkline = ft_checkline(*backup)) >= 0)
-		return (spit_line(backup, checkline, line, buffer));
-	else if (*backup)
+	if (*back && (checkline = ft_checkline(*back)) >= 0)
+		return (spit_line(back, checkline, line, buffer));
+	else if (*back)
 	{
-		*line = *backup;
-		*backup = 0;
-		free(*backup);
+		*line = *back;
+		*back = 0;
 		free(*buffer);
-		return (1);
+		return (0);
 	}
-//	free(*backup);
-//	free(*buffer);
+	free(*back);
+	free(*buffer);
 	*line = ft_strdup("");
 	return (0);
 }
@@ -71,10 +69,10 @@ int		get_next_line(int fd, char **line)
 	ssize_t			sizeofread;
 	char			*buffer;
 	int				checkline;
-	char 			*tmp;
+	char			*tmp;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0 ||
-	 (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
+		(!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
 		return (-1);
 	while ((sizeofread = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
@@ -82,10 +80,10 @@ int		get_next_line(int fd, char **line)
 		if (back[fd] == NULL)
 			back[fd] = ft_strdup("");
 		tmp = ft_strjoin(back[fd], buffer);
-		free (back[fd]);
+		free(back[fd]);
 		back[fd] = tmp;
 		if ((checkline = ft_checkline(back[fd])) >= 0)
-			return(spit_line(&back[fd], checkline, line, &buffer));
+			return (spit_line(&back[fd], checkline, line, &buffer));
 	}
 	return (return_all(&back[fd], line, sizeofread, &buffer));
 }

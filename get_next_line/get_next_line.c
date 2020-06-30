@@ -6,13 +6,11 @@
 /*   By: Smeeblin <kvm1986@yandex.ru>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/16 14:23:24 by Smeeblin          #+#    #+#             */
-/*   Updated: 2020/06/30 20:21:42 by Smeeblin         ###   ########.fr       */
+/*   Updated: 2020/06/30 20:31:45 by Smeeblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <stdio.h>
 
 int		ft_checkline(char *back)
 {
@@ -71,10 +69,10 @@ int		get_next_line(int fd, char **line)
 	ssize_t			sizeofread;
 	char			*buffer;
 	int				checkline;
-	char 			*tmp;
+	char			*tmp;
 
 	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0 ||
-	 (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
+		(!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))))
 		return (-1);
 	while ((sizeofread = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
@@ -82,10 +80,10 @@ int		get_next_line(int fd, char **line)
 		if (back[fd] == NULL)
 			back[fd] = ft_strdup("");
 		tmp = ft_strjoin(back[fd], buffer);
-		free (back[fd]);
+		free(back[fd]);
 		back[fd] = tmp;
 		if ((checkline = ft_checkline(back[fd])) >= 0)
-			return(spit_line(&back[fd], checkline, line, &buffer));
+			return (spit_line(&back[fd], checkline, line, &buffer));
 	}
 	return (return_all(&back[fd], line, sizeofread, &buffer));
 }
